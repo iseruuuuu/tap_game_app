@@ -81,7 +81,7 @@ class GameScreen extends StatelessWidget {
                     'TAP',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 30,
+                      fontSize: 40,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
