@@ -33,56 +33,66 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            NeumorphicButton(
-              style: NeumorphicStyle(
-                depth: 0,
-                color: controller.level1.value ? Colors.red : Colors.white,
-              ),
-              onPressed: () {
-                controller.level1.value ? controller.onTapGameStart() : null;
-              },
-              child: const Text(
-                'Revel１',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
+            TitleButton(
+              depth: controller.level1.value ? 0 : -20,
+              title: 'Level1',
+              onTap: () =>
+                  controller.level1.value ? controller.onTapGameStart() : null,
+              colors: controller.level1.value ? Colors.red : Colors.grey,
             ),
             const SizedBox(height: 20),
-            NeumorphicButton(
-              style: NeumorphicStyle(
-                depth: -20,
-                color: controller.level2.value ? Colors.red : Colors.grey,
-              ),
-              onPressed: () {
-                controller.level2.value ? controller.onTapGameStart() : null;
-              },
-              child: const Text(
-                'Revel 2',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
+            TitleButton(
+              depth: controller.level2.value ? 0 : -20,
+              title: 'Level2',
+              onTap: () =>
+                  controller.level2.value ? controller.onTapGameStart() : null,
+              colors: controller.level2.value ? Colors.red : Colors.grey,
             ),
             const SizedBox(height: 20),
-            NeumorphicButton(
-              style: NeumorphicStyle(
-                depth: -20,
-                color: controller.level3.value ? Colors.red : Colors.grey,
-              ),
-              onPressed: () {
-                controller.level3.value ? controller.onTapGameStart() : null;
-              },
-              child: const Text(
-                'Revel 3',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
+            TitleButton(
+              depth: controller.level3.value ? 0 : -20,
+              title: 'Level3',
+              onTap: () =>
+                  controller.level3.value ? controller.onTapGameStart() : null,
+              colors: controller.level3.value ? Colors.red : Colors.grey,
             ),
             const SizedBox(height: 20),
             const Spacer(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class TitleButton extends StatelessWidget {
+  const TitleButton({
+    Key? key,
+    required this.title,
+    required this.onTap,
+    required this.colors,
+    required this.depth,
+  }) : super(key: key);
+
+  final String title;
+  final Function() onTap;
+  final Color colors;
+  final double depth;
+
+  @override
+  Widget build(BuildContext context) {
+    return NeumorphicButton(
+      style: NeumorphicStyle(
+        depth: depth,
+        color: colors,
+      ),
+      onPressed: onTap,
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 40,
         ),
       ),
     );
