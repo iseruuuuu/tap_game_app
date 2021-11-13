@@ -36,7 +36,6 @@ class HomeScreen extends StatelessWidget {
             NeumorphicButton(
               style: NeumorphicStyle(
                 depth: 0,
-                //color: Colors.red,
                 color: controller.level1.value ? Colors.red : Colors.white,
               ),
               onPressed: () {
