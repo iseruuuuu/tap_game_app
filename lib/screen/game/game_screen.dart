@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'game_screen_state.dart';
 
@@ -9,54 +10,88 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(GameScreenController());
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: const Text('Level 1'),
+        backgroundColor: Colors.grey,
+        title: NeumorphicText(
+          "レベル１",
+          style: const NeumorphicStyle(
+            depth: 4,
+            color: Colors.white,
+          ),
+          textStyle: NeumorphicTextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         automaticallyImplyLeading: false,
+        elevation: 0,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            //Text('残り時間は：あと $current秒'
-            Obx(
-              () => Text(
-                '残り時間は：あと${controller.currentTime}秒',
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
+            Neumorphic(
+              style: const NeumorphicStyle(
+                depth: -20,
+              ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1.1,
+                height: MediaQuery.of(context).size.width / 1.5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Obx(
+                      () => Text(
+                        '残り時間は：あと${controller.currentTime}秒',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                    Obx(
+                      () => Text(
+                        '残り${controller.playerScore}回でクリア',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            Obx(
-              () => Text(
-                '残り${controller.playerScore}回でクリア',
-                style: const TextStyle(
-                  fontSize: 30,
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 1.5,
+              height: MediaQuery.of(context).size.width / 1.5,
+              child: NeumorphicButton(
+                style: NeumorphicStyle(
+                  shape: NeumorphicShape.concave,
+                  boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(300)),
+                  depth: 20,
+                  lightSource: LightSource.topLeft,
                 ),
-              ),
-            ),
-            ButtonTheme(
-              minWidth: 300,
-              height: 300,
-              child: RaisedButton(
-                child: Text(
-                  '押せ！',
-                  style: TextStyle(
-                    fontSize: 20,
+                child: const Center(
+                  child: Text(
+                    'TAP',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                textColor: Colors.white,
-                //onPressed: controller.startTimer,
                 onPressed: () {
                   if (controller.current == 0) {
                   } else {
-                    //_Pincrement();
                     controller.pincrement();
                   }
-                  // if (TimerStart == false) {
                   if (controller.timerStart == false) {
-                    //startTimer();
-                    //TimerStart = true;
                     controller.startTimer();
                     controller.timerStart.value = true;
                   }
