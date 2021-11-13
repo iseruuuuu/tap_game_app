@@ -3,13 +3,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum PreferenceKey {
   //Revel2
-  level1,
-  //Revel2
   level2,
-  //Revel１
+  //Revel3
   level3,
-  //Revel１
-
+  //Revel4
+  level4,
+  //Revel5
+  level5,
+  //Revel999
+  level999,
 }
 
 class Preference {
