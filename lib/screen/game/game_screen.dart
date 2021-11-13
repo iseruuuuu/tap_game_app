@@ -41,8 +41,7 @@ class GameScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Obx(
-                      () => Text(
+                    Obx(() => Text(
                         '残り時間は：あと${controller.currentTime}秒',
                         style: const TextStyle(
                           color: Colors.black,
@@ -51,8 +50,7 @@ class GameScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Obx(
-                      () => Text(
+                    Obx(() => Text(
                         '残り${controller.playerScore}回でクリア',
                         style: const TextStyle(
                           color: Colors.black,
