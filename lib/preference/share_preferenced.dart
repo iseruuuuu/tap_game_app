@@ -7,7 +7,7 @@ enum PreferenceKey {
   //Revel2
   level2,
   //Revel１
-
+  level3,
   //Revel１
 
 }

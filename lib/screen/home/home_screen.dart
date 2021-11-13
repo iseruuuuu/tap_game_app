@@ -34,11 +34,14 @@ class HomeScreen extends StatelessWidget {
             ),
             const Spacer(),
             NeumorphicButton(
-              style: const NeumorphicStyle(
+              style: NeumorphicStyle(
                 depth: 0,
-                color: Colors.red,
+                //color: Colors.red,
+                color: controller.level1.value ? Colors.red : Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                controller.level1.value ? controller.onTapGameStart() : null;
+              },
               child: const Text(
                 'Revel１',
                 style: TextStyle(
@@ -48,10 +51,13 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             NeumorphicButton(
-              style: const NeumorphicStyle(
+              style: NeumorphicStyle(
                 depth: -20,
+                color: controller.level2.value ? Colors.red : Colors.grey,
               ),
-              onPressed: () {},
+              onPressed: () {
+                controller.level2.value ? controller.onTapGameStart() : null;
+              },
               child: const Text(
                 'Revel 2',
                 style: TextStyle(
@@ -61,10 +67,13 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             NeumorphicButton(
-              style: const NeumorphicStyle(
+              style: NeumorphicStyle(
                 depth: -20,
+                color: controller.level3.value ? Colors.red : Colors.grey,
               ),
-              onPressed: () {},
+              onPressed: () {
+                controller.level3.value ? controller.onTapGameStart() : null;
+              },
               child: const Text(
                 'Revel 3',
                 style: TextStyle(
