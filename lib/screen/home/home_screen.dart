@@ -37,24 +37,21 @@ class HomeScreen extends StatelessWidget {
             TitleButton(
               depth: controller.level1.value ? 0 : -20,
               title: 'Level1',
-              onTap: () =>
-                  controller.level1.value ? controller.onTapGameStart() : null,
+              onTap: () => controller.level1.value ? controller.onTapGameStart() : null,
               colors: controller.level1.value ? Colors.red : Colors.grey,
             ),
             const SizedBox(height: 20),
             TitleButton(
               depth: controller.level2.value ? 0 : -20,
               title: 'Level2',
-              onTap: () =>
-                  controller.level2.value ? controller.onTapGameStart() : null,
+              onTap: () => controller.level2.value ? controller.onTapGameStart() : null,
               colors: controller.level2.value ? Colors.red : Colors.grey,
             ),
             const SizedBox(height: 20),
             TitleButton(
               depth: controller.level3.value ? 0 : -20,
               title: 'Level3',
-              onTap: () =>
-                  controller.level3.value ? controller.onTapGameStart() : null,
+              onTap: () => controller.level3.value ? controller.onTapGameStart() : null,
               colors: controller.level3.value ? Colors.red : Colors.grey,
             ),
             const SizedBox(height: 20),
