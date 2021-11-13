@@ -37,7 +37,6 @@ class GameScreenController extends GetxController {
       Duration(seconds: Time), //初期値
       Duration(seconds: 1), //減らす幅
     );
-
     var sub = countDownTimer.listen(null);
     sub.onData((duration) {
       if (Playerscore == 0) {
@@ -47,7 +46,6 @@ class GameScreenController extends GetxController {
         currentTime.value = Time - duration.elapsed.inSeconds; //毎秒減らしていく
       }
     });
-
     sub.onDone(() {
       print("Done");
       if (Playerscore != 0) {
