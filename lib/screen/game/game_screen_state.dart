@@ -20,6 +20,12 @@ class GameScreenController extends GetxController {
   var currentTime = 30.obs;
   var current = 30.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    //ここで条件分岐をしたい
+  }
+
   void pincrement() {
     if (Playerscore == 0) {
       print('クリアしたよ！');
