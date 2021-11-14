@@ -3,6 +3,7 @@ import 'package:proste_dialog/proste_dialog.dart';
 import 'package:quiver/async.dart';
 import 'package:get/get.dart';
 import 'package:tap_game_app/preference/share_preferenced.dart';
+import 'package:tap_game_app/screen/home/home_screen_controller.dart';
 
 class GameScreenController extends GetxController {
   GameScreenController({
@@ -25,9 +26,28 @@ class GameScreenController extends GetxController {
   var currentTime = 30.obs;
   var current = 30.obs;
 
+  //HomeScreenController get controller => Get.find<HomeScreenController>();
+  HomeScreenController get controller => Get.put(HomeScreenController());
+
   @override
   void onInit() {
     super.onInit();
+    checkLevel();
+  }
+
+  void pincrement() {
+    if (playerScore == 0) {
+      successDialog();
+      checkLevel();
+      controller.sharedPreference();
+      successDialog();
+    } else {
+      Playerscore--;
+      playerScore.value--;
+    }
+  }
+
+  void checkLevel() {
     switch (level) {
       case 1:
         playerScore.value = 50;
@@ -45,40 +65,9 @@ class GameScreenController extends GetxController {
         playerScore.value = 120;
         break;
       case 999:
-        playerScore.value = 200;
+        playerScore.value = 400;
         break;
       default:
-    }
-  }
-
-  void pincrement() {
-    if (playerScore == 0) {
-      print('クリアしたよ！');
-      successDialog();
-      switch (level) {
-        case 1:
-          Preference().setBool(PreferenceKey.level2, true);
-          break;
-        case 2:
-          Preference().setBool(PreferenceKey.level3, true);
-          break;
-        case 3:
-          Preference().setBool(PreferenceKey.level4, true);
-          break;
-        case 4:
-          Preference().setBool(PreferenceKey.level5, true);
-          break;
-        case 5:
-          Preference().setBool(PreferenceKey.level999, true);
-          break;
-        case 999:
-          print('わーい');
-          break;
-        default:
-      }
-    } else {
-      Playerscore--;
-      playerScore.value--;
     }
   }
 
@@ -113,7 +102,7 @@ class GameScreenController extends GetxController {
         ),
         confirmButtonColor: Colors.pink,
         onConfirm: () {
-          //TODO タイトルへ戻る
+          controller.sharedPreference();
           Get.back();
           Get.back();
         },
@@ -122,7 +111,6 @@ class GameScreenController extends GetxController {
   }
 
   void startTimer() {
-    print('start');
     CountdownTimer countDownTimer = CountdownTimer(
       Duration(seconds: Time),
       Duration(seconds: 1),
@@ -132,8 +120,7 @@ class GameScreenController extends GetxController {
       if (Playerscore == 0) {
         sub.cancel();
       } else {
-        current.value = Time - duration.elapsed.inSeconds; //毎秒減らしていく
-        currentTime.value = Time - duration.elapsed.inSeconds; //毎秒減らしていく
+        currentTime.value = Time - duration.elapsed.inSeconds;
       }
     });
     sub.onDone(() {
@@ -143,6 +130,7 @@ class GameScreenController extends GetxController {
         Playerscore = 50;
         TimerStart = false;
         timerStart.value = false;
+        checkLevel();
         failureDialog();
       } else {
         sub.cancel();
@@ -150,6 +138,8 @@ class GameScreenController extends GetxController {
       }
     });
   }
+
+
 
   void failureDialog() {
     showDialog(
