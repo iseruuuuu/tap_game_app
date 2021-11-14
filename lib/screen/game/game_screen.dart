@@ -36,41 +36,55 @@ class GameScreen extends StatelessWidget {
                 depth: -20,
               ),
               child: SizedBox(
-                width: MediaQuery.of(context).size.width / 1.1,
-                height: MediaQuery.of(context).size.width / 1.5,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width / 1.1,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .width / 1.5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Obx(() => Text(
-                        '残り時間は：あと${controller.currentTime}秒',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
+                    Obx(() =>
+                        Text(
+                          '残り時間は：あと${controller.currentTime}秒',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
                         ),
-                      ),
                     ),
-                    Obx(() => Text(
-                        '残り${controller.playerScore}回でクリア',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
+                    Obx(() =>
+                        Text(
+                          '残り${controller.playerScore}回でクリア',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
                         ),
-                      ),
                     ),
                   ],
                 ),
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width / 1.5,
-              height: MediaQuery.of(context).size.width / 1.5,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 1.5,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 1.5,
               child: NeumorphicButton(
                 style: NeumorphicStyle(
                   shape: NeumorphicShape.concave,
                   boxShape:
-                      NeumorphicBoxShape.roundRect(BorderRadius.circular(300)),
+                  NeumorphicBoxShape.roundRect(BorderRadius.circular(300)),
                   depth: 20,
                   lightSource: LightSource.topLeft,
                 ),
@@ -85,8 +99,7 @@ class GameScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  if (controller.current == 0) {
-                  } else {
+                  if (controller.current == 0) {} else {
                     controller.pincrement();
                   }
                   if (controller.timerStart == false) {
