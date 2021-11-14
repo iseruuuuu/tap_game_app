@@ -19,7 +19,7 @@ class Preference {
 
   Future<bool> getBool(PreferenceKey key) async {
     final pref = await preference;
-    final value = pref.getBool(EnumToString.convertToString(key)) ?? true;
+    final value = pref.getBool(EnumToString.convertToString(key)) ?? false;
     return value;
   }
 
