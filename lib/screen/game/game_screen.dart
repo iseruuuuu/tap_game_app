@@ -7,17 +7,15 @@ class GameScreen extends StatelessWidget {
   const GameScreen({
     Key? key,
     required this.level,
-    required this.count,
     required this.keyword,
   }) : super(key: key);
 
   final int level;
-  final int count;
   final String keyword;
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(GameScreenController(level: level, count: count),tag: keyword);
+    final controller = Get.put(GameScreenController(level: level), tag: keyword);
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(

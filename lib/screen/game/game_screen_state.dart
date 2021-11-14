@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:proste_dialog/proste_dialog.dart';
 import 'package:quiver/async.dart';
 import 'package:get/get.dart';
+import 'package:tap_game_app/preference/share_preferenced.dart';
 
 class GameScreenController extends GetxController {
   GameScreenController({
     required this.level,
-    required this.count,
   });
 
   final int level;
-  final int count;
 
   int Time = 30;
 
@@ -48,14 +47,35 @@ class GameScreenController extends GetxController {
       case 999:
         playerScore.value = 200;
         break;
+      default:
     }
   }
 
   void pincrement() {
-    // if (Playerscore == 0) {
     if (playerScore == 0) {
       print('クリアしたよ！');
       successDialog();
+      switch (level) {
+        case 1:
+          Preference().setBool(PreferenceKey.level2, true);
+          break;
+        case 2:
+          Preference().setBool(PreferenceKey.level3, true);
+          break;
+        case 3:
+          Preference().setBool(PreferenceKey.level4, true);
+          break;
+        case 4:
+          Preference().setBool(PreferenceKey.level5, true);
+          break;
+        case 5:
+          Preference().setBool(PreferenceKey.level999, true);
+          break;
+        case 999:
+          print('わーい');
+          break;
+        default:
+      }
     } else {
       Playerscore--;
       playerScore.value--;
