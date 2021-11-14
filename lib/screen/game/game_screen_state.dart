@@ -4,7 +4,13 @@ import 'package:quiver/async.dart';
 import 'package:get/get.dart';
 
 class GameScreenController extends GetxController {
-  int _counter = 0;
+  GameScreenController({
+    required this.level,
+    required this.count,
+  });
+
+  final int level;
+  final int count;
 
   int Time = 30;
 
@@ -23,11 +29,31 @@ class GameScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    //ここで条件分岐をしたい
+    switch (level) {
+      case 1:
+        playerScore.value = 50;
+        break;
+      case 2:
+        playerScore.value = 70;
+        break;
+      case 3:
+        playerScore.value = 90;
+        break;
+      case 4:
+        playerScore.value = 110;
+        break;
+      case 5:
+        playerScore.value = 120;
+        break;
+      case 999:
+        playerScore.value = 200;
+        break;
+    }
   }
 
   void pincrement() {
-    if (Playerscore == 0) {
+    // if (Playerscore == 0) {
+    if (playerScore == 0) {
       print('クリアしたよ！');
       successDialog();
     } else {
@@ -78,8 +104,8 @@ class GameScreenController extends GetxController {
   void startTimer() {
     print('start');
     CountdownTimer countDownTimer = CountdownTimer(
-      Duration(seconds: Time), //初期値
-      Duration(seconds: 1), //減らす幅
+      Duration(seconds: Time),
+      Duration(seconds: 1),
     );
     var sub = countDownTimer.listen(null);
     sub.onData((duration) {
@@ -91,7 +117,6 @@ class GameScreenController extends GetxController {
       }
     });
     sub.onDone(() {
-      print("Done");
       if (Playerscore != 0) {
         //TODO ダメだった時
         current == 30;

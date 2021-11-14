@@ -4,17 +4,26 @@ import 'package:get/get.dart';
 import 'game_screen_state.dart';
 
 class GameScreen extends StatelessWidget {
-  const GameScreen({Key? key}) : super(key: key);
+  const GameScreen({
+    Key? key,
+    required this.level,
+    required this.count,
+    required this.keyword,
+  }) : super(key: key);
+
+  final int level;
+  final int count;
+  final String keyword;
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(GameScreenController());
+    final controller = Get.put(GameScreenController(level: level, count: count),tag: keyword);
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
         backgroundColor: Colors.grey,
         title: NeumorphicText(
-          "レベル１",
+          'レベル$level',
           style: const NeumorphicStyle(
             depth: 4,
             color: Colors.white,
@@ -36,55 +45,44 @@ class GameScreen extends StatelessWidget {
                 depth: -20,
               ),
               child: SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 1.1,
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 1.5,
+                width: MediaQuery.of(context).size.width / 1.1,
+                height: MediaQuery.of(context).size.width / 1.5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Obx(() =>
-                        Text(
-                          '残り時間は：あと${controller.currentTime}秒',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                          ),
+                    Obx(
+                      () => Text(
+                        '残り時間は：あと${controller.currentTime}秒',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
                         ),
+                      ),
                     ),
-                    Obx(() =>
-                        Text(
-                          '残り${controller.playerScore}回でクリア',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                          ),
+                    Obx(
+                      () => Text(
+                        '残り${controller.playerScore}回でクリア',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
                         ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             SizedBox(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width / 1.5,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .width / 1.5,
+              width: MediaQuery.of(context).size.width / 1.5,
+              height: MediaQuery.of(context).size.width / 1.5,
               child: NeumorphicButton(
                 style: NeumorphicStyle(
                   shape: NeumorphicShape.concave,
-                  boxShape:
-                  NeumorphicBoxShape.roundRect(BorderRadius.circular(300)),
+                  boxShape: NeumorphicBoxShape.roundRect(
+                    BorderRadius.circular(300),
+                  ),
                   depth: 20,
                   lightSource: LightSource.topLeft,
                 ),
@@ -99,7 +97,8 @@ class GameScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  if (controller.current == 0) {} else {
+                  if (controller.current == 0) {
+                  } else {
                     controller.pincrement();
                   }
                   if (controller.timerStart == false) {

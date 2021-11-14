@@ -24,7 +24,7 @@ class HomeScreenController extends GetxController {
     level999.value = await Preference().getBool(PreferenceKey.level999);
   }
 
-  onTapGameStart() {
-    Get.to(() => const GameScreen());
+  onTapGameStart(int level, int count,String keyword) {
+    Get.to(() => GameScreen(level: level, count: count, keyword: keyword));
   }
 }
