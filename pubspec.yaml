@@ -26,8 +26,12 @@ dependencies:
   shared_preferences: ^2.0.8
   enum_to_string: ^2.0.1
 
+
   #dialog
-  giffy_dialog: ^1.8.0
+  proste_dialog: ^2.1.2
+#  image_dialog:
+#    path: /Users/ryutaroiseki/flutter_package/image_dialog
+
 
 dev_dependencies:
   flutter_test:
