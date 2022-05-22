@@ -20,7 +20,7 @@ class HomeScreenController extends GetxController {
 
   void onTap30() {
     //TODO 後で記載が必要
-    Get.to(() => const Game30Screen(level: 0, keyword: ''));
+    Get.to(() => const Game30Screen());
   }
 
   void onTapChallenge() {
