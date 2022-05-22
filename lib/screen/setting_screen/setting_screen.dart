@@ -80,16 +80,16 @@ class _SettingScreenState extends State<SettingScreen>
                 leading: const Icon(Icons.star),
                 title: const Text('レビューする'),
                 onPressed: (context) async {
-                    if (await inAppReview.isAvailable()) {
-                      inAppReview.requestReview();
-                    } else {
-                      openDialog(
-                        context: context,
-                        title: 'レビューができませんでした。',
-                        content: 'レビューができませんでした。\n'
-                            'お手数ですが、もう一度お試しください',
-                      );
-                    }
+                  if (await inAppReview.isAvailable()) {
+                    inAppReview.requestReview();
+                  } else {
+                    openDialog(
+                      context: context,
+                      title: 'レビューができませんでした。',
+                      content: 'レビューができませんでした。\n'
+                          'お手数ですが、もう一度お試しください',
+                    );
+                  }
                 },
               ),
             ],
