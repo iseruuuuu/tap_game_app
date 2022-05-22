@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:settings_ui/settings_ui.dart';
-
-// import 'package:in_app_review/in_app_review.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -19,7 +18,7 @@ class _SettingScreenState extends State<SettingScreen>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    // final InAppReview inAppReview = InAppReview.instance;
+    final InAppReview inAppReview = InAppReview.instance;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: CupertinoColors.secondarySystemBackground,
@@ -64,33 +63,34 @@ class _SettingScreenState extends State<SettingScreen>
                 title: const Text('お問い合わせ'),
                 onPressed: (context) async {
                   const url = 'https://forms.gle/eE8gJ2nQWghTfGzt6';
-                  // if (await canLaunch(url)) {
-                  //   await launch(url);
-                  // } else {
-                  //   openDialog(
-                  //     context: context,
-                  //     title: 'URLエラー',
-                  //     content: 'URLが開けませんでした。\n'
-                  //         'もう一度押してみるか、\n'
-                  //         '一度アプリを再起動してみてください。',
-                  //   );
-                  // }
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    openDialog(
+                      context: context,
+                      title: 'URLエラー',
+                      content: 'URLが開けませんでした。\n'
+                          'もう一度押してみるか、\n'
+                          '一度アプリを再起動してみてください。',
+                    );
+                  }
                 },
               ),
               SettingsTile.navigation(
                 leading: const Icon(Icons.star),
                 title: const Text('レビューする'),
                 onPressed: (context) async {
-                  //   if (await inAppReview.isAvailable()) {
-                  //     inAppReview.requestReview();
-                  //   } else {
-                  //     openDialog(
-                  //       context: context,
-                  //       title: 'レビューができませんでした。',
-                  //       content: 'レビューができませんでした。\n'
-                  //           'お手数ですが、もう一度お試しください',
-                  //     );
-                  //   }
+                  //TODO ローディング画面を入れたい
+                    if (await inAppReview.isAvailable()) {
+                      inAppReview.requestReview();
+                    } else {
+                      openDialog(
+                        context: context,
+                        title: 'レビューができませんでした。',
+                        content: 'レビューができませんでした。\n'
+                            'お手数ですが、もう一度お試しください',
+                      );
+                    }
                 },
               ),
             ],

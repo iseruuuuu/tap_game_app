@@ -27,7 +27,10 @@ dependencies:
   shared_preferences: ^2.0.8
   enum_to_string: ^2.0.1
 
+  #Setting
   settings_ui: ^2.0.2
+  url_launcher: ^6.0.18
+  in_app_review: ^2.0.4
 
   #dialog https://pub.dev/packages/proste_dialog
   proste_dialog: ^2.1.2
