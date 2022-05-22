@@ -80,7 +80,6 @@ class _SettingScreenState extends State<SettingScreen>
                 leading: const Icon(Icons.star),
                 title: const Text('レビューする'),
                 onPressed: (context) async {
-                  //TODO ローディング画面を入れたい
                     if (await inAppReview.isAvailable()) {
                       inAppReview.requestReview();
                     } else {
