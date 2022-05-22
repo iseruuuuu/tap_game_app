@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tap_game_app/screen/home/home_screen.dart';
+import 'package:tap_game_app/screen/home_screen/home_screen.dart';
 
 void main() => runApp(const App());
 
