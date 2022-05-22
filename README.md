@@ -1,17 +1,27 @@
 # tap_game_app
 
-A new Flutter project.
+# comic_check_app
 
-## Getting Started
+## 現状のアプリ  
+・連打のゲームが５ステージある  
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## アップデート内容
+・30秒間にどのくらい叩けるかのステージを追加する  
+・設定画面の追加
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# tap_game_app
+## やることリスト
+- [ ] もう一度遊べるようにリセット機能を追加する（Game30画面）
+- [ ] スタートするアニメーションを入れる（Game30画面）
+
+- [ ] 
+- [ ] 
+
+## 完了リスト
+- [x] 30秒ゲーム画面のUIを改善（Game30画面）
+- [x] ゲーム終了のダイアログを入れた（Game30画面）
+- [x] Home画面の改善
+- [x] ハイスコアを入れる処理を追加する。（Game30画面）
+
+ 
