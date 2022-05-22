@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-import 'game_screen_state.dart';
+import 'package:tap_game_app/screen/game_screen/game_screen_controller.dart';
+
 
 class GameScreen extends StatelessWidget {
   const GameScreen({

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proste_dialog/proste_dialog.dart';
 import 'package:quiver/async.dart';
 import 'package:get/get.dart';
-import 'package:tap_game_app/preference/share_preferenced.dart';
-import 'package:tap_game_app/screen/home/home_screen_controller.dart';
+import 'package:tap_game_app/screen/home_screen/home_screen_controller.dart';
 
 class GameScreenController extends GetxController {
   GameScreenController({
@@ -26,7 +25,6 @@ class GameScreenController extends GetxController {
   var currentTime = 30.obs;
   var current = 30.obs;
 
-  //HomeScreenController get controller => Get.find<HomeScreenController>();
   HomeScreenController get controller => Get.put(HomeScreenController());
 
   @override
@@ -138,8 +136,6 @@ class GameScreenController extends GetxController {
       }
     });
   }
-
-
 
   void failureDialog() {
     showDialog(
