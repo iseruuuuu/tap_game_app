@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-import 'package:tap_game_app/screen/game_30_screen/bounce_button.dart';
 import 'package:tap_game_app/screen/game_30_screen/game_30_screen_controller.dart';
 
 class Game30Screen extends StatelessWidget {
@@ -86,19 +85,18 @@ class Game30Screen extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 1.5,
                   height: MediaQuery.of(context).size.width / 1.5,
-                  child: BounceButton(
-                    key: key,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      onPrimary: Colors.red,
+                    ),
                     onPressed: controller.onTap,
-                    textColor: Colors.black,
-                    color: Colors.red,
-                    child: const Center(
-                      child: Text(
-                        'タップ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    child: Text(
+                      controller.tapText.value,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
