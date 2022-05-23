@@ -74,12 +74,15 @@ class Game30Screen extends StatelessWidget {
             Stack(
               alignment: Alignment.center,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  height: MediaQuery.of(context).size.width / 1.2,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(30),
+                Material(
+                  elevation: 100,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 1.2,
+                    height: MediaQuery.of(context).size.width / 1.2,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -87,16 +90,20 @@ class Game30Screen extends StatelessWidget {
                   height: MediaQuery.of(context).size.width / 1.5,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      onPrimary: Colors.red,
+                      primary: Colors.lightBlueAccent,
+                      onPrimary: Colors.white,
+                      shape: const CircleBorder(),
+                      elevation: 100,
                     ),
                     onPressed: controller.onTap,
-                    child: Text(
-                      controller.tapText.value,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
+                    child: Obx(
+                      () => Text(
+                        controller.tapText.value,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
