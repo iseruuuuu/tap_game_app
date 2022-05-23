@@ -1,48 +1,35 @@
+import 'dart:async';
+import 'package:circular_countdown/circular_countdown.dart';
 import 'package:flutter/material.dart';
 import 'package:proste_dialog/proste_dialog.dart';
-import 'package:quiver/async.dart';
 import 'package:get/get.dart';
-import 'package:tap_game_app/screen/home_screen/home_screen_controller.dart';
+import 'package:tap_game_app/preference/share_preferenced.dart';
 
 class GameScreenController extends GetxController {
   GameScreenController({
     required this.level,
+    required this.preferenceKey,
   });
 
   final int level;
-
-  int Time = 30;
-
-  bool TimerStart = false;
-  var timerStart = false.obs;
-
-//タップしなければならない回数
-  int Playerscore = 50;
+  final PreferenceKey preferenceKey;
   var playerScore = 50.obs;
-
-  //残り時間
-  //int current = 30;
   var currentTime = 30.obs;
-  var current = 30.obs;
-
-  HomeScreenController get controller => Get.put(HomeScreenController());
+  bool isStart = false;
+  var tapText = ''.obs;
+  late Timer timer;
 
   @override
   void onInit() {
     super.onInit();
+    tapText.value = 'スタート';
     checkLevel();
   }
 
-  void pincrement() {
-    if (playerScore == 0) {
-      successDialog();
-      checkLevel();
-      controller.sharedPreference();
-      successDialog();
-    } else {
-      Playerscore--;
-      playerScore.value--;
-    }
+  @override
+  void onClose() {
+    super.onClose();
+    tapText.value = 'スタート';
   }
 
   void checkLevel() {
@@ -69,12 +56,61 @@ class GameScreenController extends GetxController {
     }
   }
 
+  void onTap() {
+    if (isStart == false) {
+      startGame();
+    } else {
+      if (playerScore.value == 0) {
+        timer.cancel();
+        successDialog();
+      } else {
+        playerScore.value--;
+      }
+    }
+  }
+
+  Future<void> startGame() async {
+    openStartDialog();
+    await Future.delayed(const Duration(seconds: 5));
+    startTimer();
+    isStart = true;
+    tapText.value = 'タップ';
+  }
+
+  void startTimer() {
+    const duration = Duration(seconds: 1);
+    timer = Timer.periodic(
+      duration,
+      (Timer timer) {
+        if (currentTime.value == 0) {
+          isStart = false;
+          timer.cancel();
+          if (playerScore.value == 0) {
+            timer.cancel();
+            successDialog();
+          } else {
+            timer.cancel();
+            failureDialog();
+          }
+        } else {
+          isStart = true;
+          currentTime.value--;
+        }
+      },
+    );
+  }
+
+  Future<void> setPreference(PreferenceKey key) async {
+    await Preference().setBool(key, true);
+  }
+
   void successDialog() {
     showDialog(
       context: Get.overlayContext!,
+      barrierDismissible: false,
       builder: (_) => ProsteDialog(
         title: const Text(
-          'クリアです！',
+          'クリア！',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -100,7 +136,8 @@ class GameScreenController extends GetxController {
         ),
         confirmButtonColor: Colors.pink,
         onConfirm: () {
-          controller.sharedPreference();
+          setPreference(preferenceKey);
+          Get.back();
           Get.back();
           Get.back();
         },
@@ -108,38 +145,10 @@ class GameScreenController extends GetxController {
     );
   }
 
-  void startTimer() {
-    CountdownTimer countDownTimer = CountdownTimer(
-      Duration(seconds: Time),
-      Duration(seconds: 1),
-    );
-    var sub = countDownTimer.listen(null);
-    sub.onData((duration) {
-      if (Playerscore == 0) {
-        sub.cancel();
-      } else {
-        currentTime.value = Time - duration.elapsed.inSeconds;
-      }
-    });
-    sub.onDone(() {
-      if (Playerscore != 0) {
-        //TODO ダメだった時
-        current == 30;
-        Playerscore = 50;
-        TimerStart = false;
-        timerStart.value = false;
-        checkLevel();
-        failureDialog();
-      } else {
-        sub.cancel();
-        current.value = 30;
-      }
-    });
-  }
-
   void failureDialog() {
     showDialog(
       context: Get.overlayContext!,
+      barrierDismissible: false,
       builder: (_) => ProsteDialog(
         type: DialogTipType.error,
         title: const Text(
@@ -160,7 +169,7 @@ class GameScreenController extends GetxController {
         ),
         showCancelButton: false,
         confirmButtonText: const Text(
-          'タイトル画面へ',
+          'もう一度',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
@@ -176,4 +185,39 @@ class GameScreenController extends GetxController {
       ),
     );
   }
+}
+
+void openStartDialog() {
+  showDialog(
+    context: Get.context!,
+    barrierDismissible: false,
+    builder: (_) {
+      return AlertDialog(
+        insetPadding: const EdgeInsets.all(15),
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        content: SizedBox(
+          width: MediaQuery.of(Get.context!).size.width,
+          height: MediaQuery.of(Get.context!).size.width,
+          child: TimeCircularCountdown(
+            //現在の時間
+            countdownCurrentColor: Colors.black,
+            //まだ過ぎていない時間
+            countdownRemainingColor: Colors.grey,
+            //過ぎた時間
+            countdownTotalColor: Colors.black,
+            unit: CountdownUnit.second,
+            countdownTotal: 5,
+            onFinished: () => Get.back(),
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontSize: 90,
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
