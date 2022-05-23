@@ -1,31 +1,36 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
+import 'package:tap_game_app/preference/share_preferenced.dart';
 import 'package:tap_game_app/screen/game_screen/game_screen_controller.dart';
-
 
 class GameScreen extends StatelessWidget {
   const GameScreen({
     Key? key,
     required this.level,
     required this.keyword,
+    required this.preferenceKey,
   }) : super(key: key);
 
   final int level;
   final String keyword;
+  final PreferenceKey preferenceKey;
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(GameScreenController(level: level), tag: keyword);
+    final controller = Get.put(
+        GameScreenController(level: level, preferenceKey: preferenceKey),
+        tag: keyword);
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: CupertinoColors.secondarySystemGroupedBackground,
       appBar: AppBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: CupertinoColors.secondarySystemGroupedBackground,
         title: NeumorphicText(
           'レベル$level',
           style: const NeumorphicStyle(
             depth: 4,
-            color: Colors.white,
+            color: Colors.black,
           ),
           textStyle: NeumorphicTextStyle(
             fontSize: 25,
@@ -37,76 +42,96 @@ class GameScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Neumorphic(
-              style: const NeumorphicStyle(
-                depth: -20,
-              ),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width / 1.1,
-                height: MediaQuery.of(context).size.width / 1.5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Obx(
-                      () => Text(
-                        '残り時間は：あと${controller.currentTime}秒',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
-                      ),
-                    ),
-                    Obx(
-                      () => Text(
-                        '残り${controller.playerScore}回でクリア',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 1.5,
-              height: MediaQuery.of(context).size.width / 1.5,
-              child: NeumorphicButton(
-                style: NeumorphicStyle(
-                  shape: NeumorphicShape.concave,
-                  boxShape: NeumorphicBoxShape.roundRect(
-                    BorderRadius.circular(300),
+            const SizedBox(height: 15),
+            Row(
+              children: [
+                const SizedBox(width: 15),
+                Container(
+                  width: MediaQuery.of(context).size.width / 4,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlueAccent,
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  depth: 20,
-                  lightSource: LightSource.topLeft,
+                  child: Obx(
+                    () => Center(
+                      child: Text(
+                        '${controller.currentTime.value}秒',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 35,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                child: const Center(
-                  child: Text(
-                    'TAP',
-                    style: TextStyle(
+                const Spacer(),
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.7,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade700,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Obx(
+                    () => Center(
+                      child: Text(
+                        '${controller.playerScore.value}回',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 45,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Spacer(),
+              ],
+            ),
+            const Spacer(),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Material(
+                  elevation: 100,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 1.2,
+                    height: MediaQuery.of(context).size.width / 1.2,
+                    decoration: BoxDecoration(
                       color: Colors.black,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),
-                onPressed: () {
-                  if (controller.current == 0) {
-                  } else {
-                    controller.pincrement();
-                  }
-                  if (controller.timerStart == false) {
-                    controller.startTimer();
-                    controller.timerStart.value = true;
-                  }
-                },
-              ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  height: MediaQuery.of(context).size.width / 1.5,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.lightBlueAccent,
+                      onPrimary: Colors.white,
+                      shape: const CircleBorder(),
+                      elevation: 100,
+                    ),
+                    onPressed: controller.onTap,
+                    child: Obx(
+                      () => Text(
+                        controller.tapText.value,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
+            const Spacer(),
           ],
         ),
       ),
