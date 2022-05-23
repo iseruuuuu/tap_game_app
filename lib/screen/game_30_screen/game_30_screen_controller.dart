@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:circular_countdown/circular_countdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tap_game_app/preference/share_preferenced.dart';
@@ -7,17 +8,22 @@ class Game30ScreenController extends GetxController {
   bool isStart = false;
   var playerScore = 0.obs;
   var currentTime = 30.obs;
-  late Timer timer;
-
   var highScore = 0.obs;
+  var tapText = ''.obs;
+  late Timer timer;
 
   @override
   void onInit() {
     super.onInit();
-    //TODO スタートみたいなポップを入れる。
-
-
+    tapText.value = 'スタート';
     loadHighScore();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    timer.cancel();
+    tapText.value = 'スタート';
   }
 
   void loadHighScore() async {
@@ -31,10 +37,52 @@ class Game30ScreenController extends GetxController {
     }
   }
 
+  Future<void> startGame() async {
+    openStartDialog();
+    await Future.delayed(const Duration(seconds: 5));
+    startTimer();
+    isStart = true;
+    tapText.value = 'タップ';
+  }
+
+  void openStartDialog() {
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder: (_) {
+        return AlertDialog(
+          insetPadding: const EdgeInsets.all(15),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          content: SizedBox(
+            width: MediaQuery.of(Get.context!).size.width,
+            height: MediaQuery.of(Get.context!).size.width,
+            child: TimeCircularCountdown(
+              //現在の時間
+              countdownCurrentColor: Colors.black,
+              //まだ過ぎていない時間
+              countdownRemainingColor: Colors.grey,
+              //過ぎた時間
+              countdownTotalColor: Colors.black,
+              unit: CountdownUnit.second,
+              countdownTotal: 5,
+              onFinished: () => Get.back(),
+              textStyle: const TextStyle(
+                color: Colors.black,
+                fontSize: 90,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void onTap() {
     if (isStart == false) {
-      startTimer();
-      isStart = true;
+      startGame();
     } else {
       playerScore.value++;
     }
@@ -63,6 +111,7 @@ class Game30ScreenController extends GetxController {
     playerScore.value = 0;
     currentTime.value = 30;
     isStart = false;
+    tapText.value = 'スタート';
   }
 
   void onTapBack() {
